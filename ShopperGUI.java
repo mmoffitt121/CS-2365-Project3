@@ -7,6 +7,7 @@ import javax.imageio.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 
+// ShopperGUI
 public class ShopperGUI extends JFrame
 {
   public static final int START_WIDTH = 800;
