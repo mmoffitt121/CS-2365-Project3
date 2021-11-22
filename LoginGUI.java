@@ -9,7 +9,7 @@ import java.io.IOException;
 public class LoginGUI extends JFrame
 {
   public static final int START_WIDTH = 300;
-  public static final int START_HEIGHT = 360;
+  public static final int START_HEIGHT = 390;
 
   public static final int CHARS_VISIBLE_IN_TEXTBOX = 8;
 
@@ -18,8 +18,16 @@ public class LoginGUI extends JFrame
 
   private JTextField usernamefield;
   private JTextField rewardnumberfield;
+  
+  private JTextField firstnamefield, lastnamefield, emailfield, phonenumberfield;
+  private JCheckBox elitefield;
+  
+  private JPanel outerpanel;
 
   private JLabel splashimagelabel;
+  
+  private JPanel holdingpanel;
+  private JPanel registrationpanel;
 
   // --==================================-- //
   // GUI building                           //
@@ -33,11 +41,17 @@ public class LoginGUI extends JFrame
     setResizable(false);
     setTitle("Shopper PRO 6.2");
     setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    
+    outerpanel = new JPanel();
+    outerpanel.setLayout(new BorderLayout());
+    add(outerpanel);
+    
+    // Initialize login panel ---
 
-    JPanel holdingpanel = new JPanel();
+    holdingpanel = new JPanel();
     holdingpanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
     holdingpanel.setLayout(new BorderLayout());
-    add(holdingpanel);
+    outerpanel.add(holdingpanel);
 
     JPanel loginpanel = new JPanel();
     loginpanel.setLayout(new FlowLayout());
@@ -64,6 +78,58 @@ public class LoginGUI extends JFrame
     loginbutton.addActionListener(new LogInButtonListener(shopper));
     loginbutton.setPreferredSize(new Dimension(BOX_WIDTH, BOX_HEIGHT));
     loginpanel.add(loginbutton);
+    
+    JButton registerbutton = new JButton("Register");
+    registerbutton.addActionListener(new RegisterButtonListener(shopper));
+    registerbutton.setPreferredSize(new Dimension(BOX_WIDTH, BOX_HEIGHT));
+    loginpanel.add(registerbutton);
+    
+    // Initialize registration panel ---
+    
+    registrationpanel = new JPanel();
+    registrationpanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
+    registrationpanel.setLayout(new BorderLayout());
+    
+    JPanel regpanel = new JPanel();
+    regpanel.setLayout(new FlowLayout());
+    registrationpanel.add(regpanel);
+
+    BufferedImage regimage = shopper.GetImage("graphics/Registration Day.png");
+    if (regimage != null)
+    {
+      JLabel regimagelabel = new JLabel(new ImageIcon(regimage));
+      regpanel.add(regimagelabel);
+    }
+    
+    JLabel firstnamelabel = new JLabel("First Name:         ");
+    regpanel.add(firstnamelabel);
+    firstnamefield = new JTextField(CHARS_VISIBLE_IN_TEXTBOX);
+    regpanel.add(firstnamefield);
+
+    JLabel lastnamelabel = new JLabel("Last Name:         ");
+    regpanel.add(lastnamelabel);
+    lastnamefield = new JTextField(CHARS_VISIBLE_IN_TEXTBOX);
+    regpanel.add(lastnamefield);
+    
+    JLabel emaillabel = new JLabel("Email Address:   ");
+    regpanel.add(emaillabel);
+    emailfield = new JTextField(CHARS_VISIBLE_IN_TEXTBOX);
+    regpanel.add(emailfield);
+
+    JLabel phonenumberlabel = new JLabel("Phone Number:   ");
+    regpanel.add(phonenumberlabel);
+    phonenumberfield = new JTextField(CHARS_VISIBLE_IN_TEXTBOX);
+    regpanel.add(phonenumberfield);
+    
+    JLabel elitelabel = new JLabel("Are you feeling elite?");
+    regpanel.add(elitelabel);
+    elitefield = new JCheckBox();
+    regpanel.add(elitefield);
+    
+    JButton registerbuttonfinal = new JButton("Register");
+    registerbuttonfinal.addActionListener(new RegisterFinalizeButtonListener(shopper));
+    registerbuttonfinal.setPreferredSize(new Dimension(BOX_WIDTH, BOX_HEIGHT));
+    regpanel.add(registerbuttonfinal);
   }
 
   public void DisplayIncorrect(Shopper shopper)
@@ -74,6 +140,58 @@ public class LoginGUI extends JFrame
       splashimagelabel.setIcon(new ImageIcon(splashimage));
       //loginpanel.add(splashimagelabel);
     }
+  }
+  
+  public void DisplayRegistration()
+  {
+	  outerpanel.removeAll();
+	  outerpanel.revalidate();
+	  outerpanel.repaint();
+	  outerpanel.add(registrationpanel);
+  }
+  
+  public void DisplayLogin()
+  {
+	  outerpanel.removeAll();
+	  outerpanel.revalidate();
+	  outerpanel.repaint();
+	  outerpanel.add(holdingpanel);
+  }
+  
+  public void DisplayNumber(int rewardsnumber)
+  {
+	  String r = "" + rewardsnumber;
+	  for (int i = r.length(); i < 8; i++)
+	  {
+		  r = "0" + r;
+	  }
+	  
+	  JOptionPane.showMessageDialog(null, "Your rewards number is: " + r, "Your rewards number", JOptionPane.INFORMATION_MESSAGE);
+  }
+  
+  public String GetFirstName()
+  {
+	  return firstnamefield.getText();
+  }
+  
+  public String GetLastName()
+  {
+	  return lastnamefield.getText();
+  }
+  
+  public String GetEmail()
+  {
+	  return emailfield.getText();
+  }
+  
+  public String GetPhoneNumber()
+  {
+	  return phonenumberfield.getText();
+  }
+  
+  public boolean GetElite()
+  {
+	  return elitefield.isSelected();
   }
 
 
@@ -122,6 +240,34 @@ public class LoginGUI extends JFrame
     }
 
     public LogInButtonListener (Shopper _shopper)
+    {
+      shopper = _shopper;
+    }
+  }
+  
+  public class RegisterButtonListener implements ActionListener
+  {
+    Shopper shopper;
+    public void actionPerformed(ActionEvent e)
+    {
+      shopper.StartRegistration();
+    }
+
+    public RegisterButtonListener (Shopper _shopper)
+    {
+      shopper = _shopper;
+    }
+  }
+  
+  public class RegisterFinalizeButtonListener implements ActionListener
+  {
+    Shopper shopper;
+    public void actionPerformed(ActionEvent e)
+    {
+      shopper.Register();
+    }
+
+    public RegisterFinalizeButtonListener (Shopper _shopper)
     {
       shopper = _shopper;
     }

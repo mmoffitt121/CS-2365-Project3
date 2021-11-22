@@ -18,6 +18,6 @@ public class RegularCustomer extends Customer
   public RegularCustomer(String _fname, String _lname, int _rewnumber, boolean _elite, int _stars, String _email, String _phnumber)
   {
     super(_fname, _lname, _rewnumber, _elite, _email, _phnumber);
-    SetStars(stars);
+    SetStars(_stars);
   }
 }

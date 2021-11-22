@@ -9,26 +9,36 @@ import java.awt.event.*;
 import java.awt.*;
 import javax.imageio.*;
 import java.awt.image.BufferedImage;
+import java.io.PrintWriter;
 
 public class Shopper
 {
   private LoginGUI logingui;
   private ShopperGUI shoppergui;
+  
+  private Customer customer;
 
   private ArrayList<Customer> customers;
   private ArrayList<Product> products;
   private ArrayList<Cart> carts;
+  
+  private Cart cart;
+  
+  private boolean incart;
 
   public void Run()
   {
     logingui = new LoginGUI(this);
-    //logingui.setVisible(true);
+    logingui.setVisible(true);
     ReadCustomers();
-    shoppergui = new ShopperGUI(this, "Smith", 256791);
+    /*customer = customers.get(customers.indexOf(new Customer("Smith", 256791)));
+    shoppergui = new ShopperGUI(this);
     shoppergui.setVisible(true);
     ReadProducts();
     ReadCarts();
+    cart = GetCart(customer);
     shoppergui.DisplaySearchResults(this, products);
+    shoppergui.DisplayCartResults(this, cart);*/
   }
 
   // Attempts to read 
@@ -38,12 +48,17 @@ public class Shopper
     {
       if (customers.contains(new Customer(logingui.GetNameEntry(), logingui.GetRewardEntry())))
       {
-        shoppergui = new ShopperGUI(this, logingui.GetNameEntry(), logingui.GetRewardEntry());
+    	String user = logingui.GetNameEntry();
+    	int userrewardnumber = logingui.GetRewardEntry();
+    	customer = customers.get(customers.indexOf(new Customer(user, userrewardnumber)));
+        shoppergui = new ShopperGUI(this);
         logingui.setVisible(false);
         shoppergui.setVisible(true);
         ReadProducts();
         ReadCarts();
+        cart = GetCart(customer);
         shoppergui.DisplaySearchResults(this, products);
+        shoppergui.DisplayCartResults(this, cart, customer);
       }
       else
       {
@@ -158,10 +173,107 @@ public class Shopper
       System.exit(0);
     }
   }
-
+  
+  // Writes cart file
+  public void WriteCarts()
+  {
+	  try
+	  {
+		  File cartfile = new File("carts.txt");
+		  cartfile.delete();
+		  cartfile.createNewFile();
+		 
+		  for (int i = carts.size()-1; i >= 0; i--)
+		  {
+			  if (carts.get(i).Items().size() == 0)
+			  {
+				  carts.remove(i);
+			  }
+		  }
+		  
+		  PrintWriter writer = new PrintWriter(cartfile);
+		  writer.println(carts.size());
+		  
+		  for (Cart c : carts)
+		  {
+			  writer.println(c.RewNumber());
+			  
+			  ArrayList<Product> printed = new ArrayList<Product>();
+			  ArrayList<Integer> count = new ArrayList<Integer>();
+			  for (int i = 0; i < c.Items().size(); i++)
+			  {
+				  if (printed.contains(c.Items().get(i)))
+				  {
+					  count.set(printed.indexOf(c.Items().get(i)), count.get(printed.indexOf(c.Items().get(i))) + 1);
+				  }
+				  else
+				  {
+					  printed.add(c.Items().get(i));
+					  count.add(1);
+				  }
+			  }
+			  
+			  writer.println(printed.size());
+			  
+			  for (int i = 0; i < printed.size(); i++)
+			  {
+				  writer.print(printed.get(i).Number() + " ");
+				  writer.println(count.get(i));
+			  }
+		  }
+		  
+		  writer.close();
+	  }
+	  catch (IOException e)
+	  {
+		  return;
+	  }
+  }
+  
+  // Writes customer files
+  public void WriteCustomers()
+  {
+	  try
+	  {
+		  File cfile = new File("customers.txt");
+		  cfile.delete();
+		  cfile.createNewFile();
+		  
+		  PrintWriter writer = new PrintWriter(cfile);
+		  writer.println(customers.size());
+		  
+		  for (Customer c : customers)
+		  {
+			  writer.println(c.FName());
+			  writer.println(c.LName());
+			  if (c.elite())
+			  {
+				  writer.println(c.RewNumber() + " Yes");
+				  EliteCustomer cc = (EliteCustomer)c;
+				  writer.println(cc.GetPercentDiscount());
+			  }
+			  else
+			  {
+				  writer.println(c.RewNumber() + " No");
+				  RegularCustomer cc = (RegularCustomer)c;
+				  writer.println(cc.GetStars());
+			  }
+			  writer.println(c.Email());
+			  writer.println(c.PhNumber());
+		  }
+		  
+		  writer.close();
+	  }
+	  catch (IOException e)
+	  {
+		  return;
+	  }
+  }
+  
+  // Displays searched products to user
   public void Search()
   {
-    /*String kwd = shoppergui.GetSearchTerm();
+    String kwd = shoppergui.GetSearchTerm();
 
     ArrayList<Product> results = new ArrayList<Product>();
     for (Product i : products)
@@ -170,10 +282,24 @@ public class Shopper
       {
         results.add(i);
       }
-    }*/
+    }
 
     shoppergui.EmptySearch();
-    /*shoppergui.DisplaySearchResults(this, results);*/
+    shoppergui.DisplaySearchResults(this, results);
+  }
+  
+  public Cart GetCart(Customer cust)
+  {
+	  if (carts.contains(new Cart(cust.RewNumber())))
+	  {
+		  return carts.get(carts.indexOf(new Cart(cust.RewNumber())));
+	  }
+	  else
+	  {
+		  Cart toreturn = new Cart(cust.RewNumber());
+		  carts.add(toreturn);
+		  return toreturn;
+	  }
   }
 
   public Product GetProductOfId(int id)
@@ -187,10 +313,42 @@ public class Shopper
     }
     return null;
   }
-
-  public void MoveToCart()
+  
+  public Customer GetUser()
   {
-    shoppergui.MoveToCart();
+	  return customer;
+  }
+
+  public void DisplayCart()
+  {
+	incart = true;
+    shoppergui.DisplayCart();
+  }
+  
+  public void DisplayShop()
+  {
+	incart = false;
+	shoppergui.DisplayShop();
+  }
+  
+  public boolean InCart()
+  {
+	return incart;
+  }
+  
+  public void AddToCart(Product toadd, int amounttoadd)
+  {
+	  for (int i = 0; i < amounttoadd; i++)
+	  {
+		  cart.AddItem(toadd);
+	  }
+	  shoppergui.DisplayCartResults(this, cart, customer);
+  }
+  
+  public void RemoveCartItem(Product prod)
+  {
+	  cart.RemoveItem(prod);
+	  shoppergui.DisplayCartResults(this, cart, customer);
   }
 
   public BufferedImage GetImage(String path)
@@ -204,5 +362,81 @@ public class Shopper
       System.out.println("No image found!");
       return null;
     }
+  }
+  
+  public void StartRegistration()
+  {
+	  logingui.DisplayRegistration();
+  }
+  
+  public void Register()
+  {
+	  String fname = logingui.GetFirstName().trim();
+	  String lname = logingui.GetLastName().trim();
+	  String email = logingui.GetEmail().trim();
+	  String phnum = logingui.GetPhoneNumber().trim();
+	  boolean elite = logingui.GetElite();
+	  
+	  int rnumber = GetNewRewardsNumber();
+	  
+	  if (lname.equals(""))
+	  {
+		  return;
+	  }
+	  
+	  Customer cst;
+	  if (elite)
+	  {
+		  cst = new EliteCustomer(fname, lname, rnumber, elite, 0, email, phnum);
+	  }
+	  else
+	  {
+		  cst = new RegularCustomer(fname, lname, rnumber, elite, 0, email, phnum);
+	  }
+	  
+	  logingui.DisplayNumber(rnumber);
+	  
+	  customers.add(cst);
+  	  customer = cst;
+      shoppergui = new ShopperGUI(this);
+      logingui.setVisible(false);
+      shoppergui.setVisible(true);
+      ReadProducts();
+      ReadCarts();
+      cart = GetCart(customer);
+      shoppergui.DisplaySearchResults(this, products);
+      shoppergui.DisplayCartResults(this, cart, customer);
+  }
+  
+  public int GetNewRewardsNumber()
+  {
+	  int newnum = 1;
+	  ArrayList<Integer> nums = new ArrayList<Integer>();
+	  
+	  for (Customer c : customers)
+	  {
+		nums.add(c.RewNumber());  
+	  }
+	  
+	  while (true)
+	  {
+		  if (nums.contains(newnum))
+		  {
+			newnum++;  
+		  }
+		  else
+		  {
+			  break;
+		  }
+	  }
+	  
+	  return newnum;
+  }
+  
+  public void LogOut()
+  {
+	  WriteCarts();
+	  WriteCustomers();
+	  System.exit(0);
   }
 }

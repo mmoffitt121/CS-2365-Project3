@@ -37,12 +37,18 @@ public class Product
 
   public boolean Match(String input)
   {
-    return Name().contains(input);
+    return Name().toLowerCase().contains(input.toLowerCase());
   }
 
   public boolean equals(int input)
   {
     return number == input;
+  }
+  
+  public boolean equals(Object object)
+  {
+	  Product obj = (Product)object;
+	  return obj.Name().equals(Name());
   }
 
   // Constructor

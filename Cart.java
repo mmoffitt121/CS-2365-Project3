@@ -24,6 +24,21 @@ public class Cart
   {
     items.remove(toremove);
   }
+  
+  public void RemoveItem(Product toremove)
+  {
+	  items.remove(toremove);
+  }
+  
+  public boolean equals(Object obj)
+  {
+	  return ((Cart)obj).RewNumber() == RewNumber();
+  }
+  
+  public ArrayList<Product> Items()
+  {
+	  return items;
+  }
 
   public Cart(int _rewnumber)
   {

@@ -80,7 +80,6 @@ public class Customer
     Customer cust = (Customer)_cust;
     if (LName().equals(cust.LName()) && RewNumber() == cust.RewNumber())
     {
-      
       return true;
     }
 

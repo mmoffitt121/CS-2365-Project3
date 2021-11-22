@@ -6,24 +6,22 @@ import javax.imageio.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 
-public class ProductGUI extends JPanel
+public class CartItemGUI extends JPanel
 {
   public static int PRODUCT_PANEL_WIDTH = 780;
   public static int PRODUCT_PANEL_HEIGHT = 230;
   
-  public String font;
+  private String font;
 
   private JPanel holdingpanel;
   private JLabel image;
   
   private Product product;
-  
-  private JTextField addamount;
 
-  ProductGUI(Shopper shopper, Product _product)
+  CartItemGUI(Shopper shopper, Product _product, int amount)
   {
-	product = _product;
-	
+	product = _product;  
+	 
     setPreferredSize(new Dimension(PRODUCT_PANEL_WIDTH, PRODUCT_PANEL_HEIGHT));
     
     font = "Baskerville Old Face";
@@ -68,50 +66,28 @@ public class ProductGUI extends JPanel
     desc.setFont(new Font(font, Font.PLAIN, 13));
     desc.setPreferredSize(new Dimension(580, 115));
     namebox.add(desc);
-
-    addamount = new JTextField(10);
-    addamount.setText("1");
-    namebox.add(addamount);
     
-    JButton addtocart = new JButton("Add to cart");
-    addtocart.setPreferredSize(new Dimension(450, 20));
-    addtocart.addActionListener(new AddToCartListener(shopper));
+    JLabel amountlabel = new JLabel("<html>Amount: " + amount + "</html>");
+    amountlabel.setVerticalAlignment(JLabel.TOP);
+    amountlabel.setFont(new Font(font, Font.PLAIN, 16));
+    amountlabel.setPreferredSize(new Dimension(100, 20));
+    namebox.add(amountlabel);
+    
+    JButton addtocart = new JButton("Remove");
+    addtocart.setPreferredSize(new Dimension(460, 20));
+    addtocart.addActionListener(new DelButtonListener(shopper));
     namebox.add(addtocart);
-
-   /* JButton cartbutton = new JButton("Cart");
-    cartbutton.addActionListener(new CartButtonListener(shopper));
-    //cartbutton.setPreferredSize(new Dimension(BOX_WIDTH, BOX_HEIGHT));
-    holdingpanel.add(cartbutton, BorderLayout.SOUTH);
-
-    /*JButton loginbutton = new JButton("Go.");
-    loginbutton.addActionListener(new SearchButtonListener(shopper));
-    loginbutton.setPreferredSize(new Dimension(BOX_WIDTH, BOX_HEIGHT));
-    loginpanel.add(loginbutton);
-
-    searchresults = new JPanel();
-    searchresults.setPreferredSize(new Dimension(480, 300));
-    scroller = new JScrollPane(searchresults);
-    searchresults.setAutoscrolls(true);
-    scroller.setPreferredSize(new Dimension(500, 300));
-    loginpanel.add(scroller);*/
   }
   
-  public class AddToCartListener implements ActionListener
+  public class DelButtonListener implements ActionListener
   {
     Shopper shopper;
     public void actionPerformed(ActionEvent e)
     {
-      try
-      {
-    	  shopper.AddToCart(product, Integer.parseInt(addamount.getText()));
-      }
-      catch (Exception ex)
-      {
-    	  return;
-      }
+      shopper.RemoveCartItem(product);
     }
 
-    public AddToCartListener (Shopper _shopper)
+    public DelButtonListener (Shopper _shopper)
     {
       shopper = _shopper;
     }
