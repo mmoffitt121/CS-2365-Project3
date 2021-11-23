@@ -1,6 +1,6 @@
 import java.util.ArrayList;
 
-public class Cart
+public class Cart implements Comparable
 {
   private int rewnumber;
   private ArrayList<Product> items;
@@ -45,5 +45,19 @@ public class Cart
     SetRewNumber(_rewnumber);
 
     items = new ArrayList<Product>();
+  }
+
+  public int compareTo(Object _cart) 
+  {
+	Cart cust = (Cart)_cart;
+	if (RewNumber() > cust.RewNumber())
+	{
+	  return 1;
+	}
+	if (RewNumber() < cust.RewNumber())
+	{
+		return -1;
+	}
+	return 0;
   }
 }

@@ -1,4 +1,6 @@
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.Scanner;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -10,6 +12,8 @@ import java.awt.*;
 import javax.imageio.*;
 import java.awt.image.BufferedImage;
 import java.io.PrintWriter;
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 
 public class Shopper
 {
@@ -119,13 +123,14 @@ public class Shopper
     products = new ArrayList<Product>();
     try
     {
-      Scanner scn = new Scanner(new File("products.txt"));
+      Scanner scn = new Scanner(new File("products.txt"), "utf-8");
 
       int amount = scn.nextInt();
       scn.nextLine();
       for (int i = 0; i < amount; i++)
       {
-        String name = scn.nextLine();
+    	
+        String name = scn.nextLine(); System.out.println(name);
         int number = scn.nextInt();
         scn.nextLine();
         String desc = scn.nextLine();
@@ -435,6 +440,8 @@ public class Shopper
   
   public void LogOut()
   {
+	  Collections.sort(customers);
+	  Collections.sort(carts);
 	  WriteCarts();
 	  WriteCustomers();
 	  System.exit(0);

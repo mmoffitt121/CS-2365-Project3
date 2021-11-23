@@ -27,16 +27,15 @@ public class CartItemGUI extends JPanel
     font = "Baskerville Old Face";
 
     holdingpanel = new JPanel();
-    //holdingpanel.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
     holdingpanel.setLayout(new FlowLayout());
     add(holdingpanel);
     add(holdingpanel);
 
     JPanel content = new JPanel();
     content.setLayout(new FlowLayout());
-    holdingpanel.add(content/*, BorderLayout.CENTER*/);
+    holdingpanel.add(content);
 
-    BufferedImage splashimage = shopper.GetImage("graphics/Home Depot Man.png");// + product.Image());
+    BufferedImage splashimage = shopper.GetImage("graphics/" + product.Image());
     if (splashimage != null)
     {
       image = new JLabel(new ImageIcon(splashimage));

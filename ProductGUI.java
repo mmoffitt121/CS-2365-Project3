@@ -38,7 +38,7 @@ public class ProductGUI extends JPanel
     content.setLayout(new FlowLayout());
     holdingpanel.add(content/*, BorderLayout.CENTER*/);
 
-    BufferedImage splashimage = shopper.GetImage("graphics/Home Depot Man.png");// + product.Image());
+    BufferedImage splashimage = shopper.GetImage("graphics/" + product.Image());// + product.Image());
     if (splashimage != null)
     {
       image = new JLabel(new ImageIcon(splashimage));

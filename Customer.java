@@ -1,6 +1,6 @@
 import java.util.Scanner;
 
-public class Customer
+public class Customer implements Comparable
 {
   private String fname;
   private String lname;
@@ -85,6 +85,20 @@ public class Customer
 
     return false;
   }
+  
+  public int compareTo(Object _cust) 
+  {
+	Customer cust = (Customer)_cust;
+	if (RewNumber() > cust.RewNumber())
+	{
+	  return 1;
+	}
+	if (RewNumber() < cust.RewNumber())
+	{
+		return -1;
+	}
+	return 0;
+  }
 
   // Constructor
 
@@ -103,4 +117,6 @@ public class Customer
     SetLName(_lname);
     SetRewNumber(_rewnumber);
   }
+
+ 
 }
