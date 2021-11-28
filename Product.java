@@ -1,3 +1,9 @@
+/**
+  ---====================================================================---
+  NAME : Product
+  PURPOSE : Holds information of one product read from a file
+  ---====================================================================---
+*/
 public class Product
 {
   private String name;
@@ -6,7 +12,11 @@ public class Product
   private double price;
   private String image;
 
-  // Accessors
+  /**
+    ---====================================================================---
+    Accessors
+    ---====================================================================---
+  */
 
   public String Name()
   {
@@ -33,7 +43,11 @@ public class Product
     return new String(image);
   }
 
-  // Comparison
+  /**
+    ---====================================================================---
+    Comparison
+    ---====================================================================---
+  */
 
   public boolean Match(String input)
   {
@@ -51,7 +65,11 @@ public class Product
 	  return obj.Name().equals(Name());
   }
 
-  // Constructor
+  /**
+    ---====================================================================---
+    Constructors
+    ---====================================================================---
+  */
 
   public Product(String _name, int _number, String _description, double _price, String _image)
   {

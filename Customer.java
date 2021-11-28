@@ -1,5 +1,12 @@
 import java.util.Scanner;
 
+/**
+  ---====================================================================---
+  NAME : Customer
+  PURPOSE : Holds information for one customer read from a file. 
+  INVARIANT : A customer must have a rewards number and a last name
+  ---====================================================================---
+*/
 public class Customer implements Comparable
 {
   private String fname;
@@ -9,7 +16,11 @@ public class Customer implements Comparable
   private String email;
   private String phnumber;
 
-  // Mutators
+  /**
+    ---====================================================================---
+    Mutators
+    ---====================================================================---
+  */
 
   public void SetFName(String _fname)
   {
@@ -41,7 +52,11 @@ public class Customer implements Comparable
     phnumber = new String(_phnumber);
   }
 
-  // Accessors
+  /**
+    ---====================================================================---
+    Accessors
+    ---====================================================================---
+  */
 
   public String FName()
   {
@@ -73,8 +88,13 @@ public class Customer implements Comparable
     return new String(phnumber);
   }
 
-  // Comparison
+  /**
+    ---====================================================================---
+    Comparison
+    ---====================================================================---
+  */
 
+  // Equals override method, necessary for list operations.
   public boolean equals(Object _cust)
   {
     Customer cust = (Customer)_cust;
@@ -86,6 +106,7 @@ public class Customer implements Comparable
     return false;
   }
   
+  // compareTo override method, necessary for list operations.
   public int compareTo(Object _cust) 
   {
 	Customer cust = (Customer)_cust;
@@ -100,7 +121,11 @@ public class Customer implements Comparable
 	return 0;
   }
 
-  // Constructor
+  /**
+    ---====================================================================---
+    Constructors
+    ---====================================================================---
+  */
 
   public Customer(String _fname, String _lname, int _rewnumber, boolean _elite, String _email, String _phnumber)
   {
@@ -117,6 +142,4 @@ public class Customer implements Comparable
     SetLName(_lname);
     SetRewNumber(_rewnumber);
   }
-
- 
 }

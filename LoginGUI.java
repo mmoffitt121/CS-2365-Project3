@@ -6,6 +6,12 @@ import javax.imageio.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 
+/**
+  ---====================================================================---
+  NAME : LoginGUI
+  PURPOSE : Holds GUI for login panel
+  ---====================================================================---
+*/
 public class LoginGUI extends JFrame
 {
   public static final int START_WIDTH = 300;
@@ -132,6 +138,13 @@ public class LoginGUI extends JFrame
     regpanel.add(registerbuttonfinal);
   }
 
+  /**
+    ---====================================================================---
+    NAME : DisplayIncorrect
+    PURPOSE : Tells you when you input the incorrect login information,
+    displays new image.
+    ---====================================================================---
+  */
   public void DisplayIncorrect(Shopper shopper)
   {
     BufferedImage splashimage = shopper.GetImage("graphics/Home Depot Man Informs You Of Your Mistake.png");
@@ -142,6 +155,12 @@ public class LoginGUI extends JFrame
     }
   }
   
+  /**
+    ---====================================================================---
+    NAME : DisplayRegistration
+    PURPOSE : Displays the registration panel 
+    ---====================================================================---
+  */
   public void DisplayRegistration()
   {
 	  outerpanel.removeAll();
@@ -150,6 +169,12 @@ public class LoginGUI extends JFrame
 	  outerpanel.add(registrationpanel);
   }
   
+  /**
+    ---====================================================================---
+    NAME : DisplayLogin
+    PURPOSE : Displays the login panel 
+    ---====================================================================---
+  */
   public void DisplayLogin()
   {
 	  outerpanel.removeAll();
@@ -158,6 +183,12 @@ public class LoginGUI extends JFrame
 	  outerpanel.add(holdingpanel);
   }
   
+  /**
+    ---====================================================================---
+    NAME : DisplayNumber
+    PURPOSE : Displays the new user's reward number
+    ---====================================================================---
+  */
   public void DisplayNumber(int rewardsnumber)
   {
 	  String r = "" + rewardsnumber;
@@ -169,6 +200,12 @@ public class LoginGUI extends JFrame
 	  JOptionPane.showMessageDialog(null, "Your rewards number is: " + r, "Your rewards number", JOptionPane.INFORMATION_MESSAGE);
   }
   
+  /**
+    ---====================================================================---
+    NAME : Getters
+    PURPOSE : Grabs values from the registration panel
+    ---====================================================================---
+  */
   public String GetFirstName()
   {
 	  return firstnamefield.getText();
@@ -195,12 +232,12 @@ public class LoginGUI extends JFrame
   }
 
 
-  // --==================================-- //
-  // Value return                           //
-  // --==================================-- //
-
-  // Returns the values in the input boxes
-
+  /**
+    ---====================================================================---
+    NAME : More getters
+    PURPOSE : Grabs values from the login panel
+    ---====================================================================---
+  */
   public String GetNameEntry()
   {
     return usernamefield.getText();

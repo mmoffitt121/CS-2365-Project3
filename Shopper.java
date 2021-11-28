@@ -15,6 +15,13 @@ import java.io.PrintWriter;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 
+/**
+  ---====================================================================---
+  NAME : Shopper
+  PURPOSE : Model in the Controller-View-Model pattern. Controls the inner
+  workings of the program, and navigation throughout the program.
+  ---====================================================================---
+*/
 public class Shopper
 {
   private LoginGUI logingui;
@@ -30,22 +37,25 @@ public class Shopper
   
   private boolean incart;
 
+  /**
+  ---====================================================================---
+  NAME : Run
+  PURPOSE : Opens the Login GUI, called when program starts
+  ---====================================================================---
+  */
   public void Run()
   {
     logingui = new LoginGUI(this);
     logingui.setVisible(true);
     ReadCustomers();
-    /*customer = customers.get(customers.indexOf(new Customer("Smith", 256791)));
-    shoppergui = new ShopperGUI(this);
-    shoppergui.setVisible(true);
-    ReadProducts();
-    ReadCarts();
-    cart = GetCart(customer);
-    shoppergui.DisplaySearchResults(this, products);
-    shoppergui.DisplayCartResults(this, cart);*/
   }
 
-  // Attempts to read 
+  /**
+  ---====================================================================---
+  NAME : LogIn
+  PURPOSE : Logs in to the program, opens the shopper gui, readies data
+  ---====================================================================---
+  */
   public void LogIn()
   {
     try
@@ -75,7 +85,13 @@ public class Shopper
     }
   }
 
-  // Reads customer file
+  /**
+  ---====================================================================---
+  NAME : ReadCustomers
+  PURPOSE : Reads the customers from an input file to the system.
+  INVARIANT : Requires customers.txt to be present and readable.
+  ---====================================================================---
+  */
   public void ReadCustomers()
   {
     customers = new ArrayList<Customer>();
@@ -117,7 +133,13 @@ public class Shopper
     }
   }
 
-  // Reads product file
+  /**
+  ---====================================================================---
+  NAME : ReadProducts
+  PURPOSE : Reads the products from an input file to the system.
+  INVARIANT : Requires products.txt to be present and readable.
+  ---====================================================================---
+  */
   public void ReadProducts()
   {
     products = new ArrayList<Product>();
@@ -130,7 +152,7 @@ public class Shopper
       for (int i = 0; i < amount; i++)
       {
     	
-        String name = scn.nextLine(); System.out.println(name);
+        String name = scn.nextLine();
         int number = scn.nextInt();
         scn.nextLine();
         String desc = scn.nextLine();
@@ -146,7 +168,13 @@ public class Shopper
     }
   }
 
-  // Reads cart file
+  /**
+  ---====================================================================---
+  NAME : ReadCarts
+  PURPOSE : Reads the carts from an input file to the system.
+  INVARIANT : Requires carts.txt to be present and readable.
+  ---====================================================================---
+  */
   public void ReadCarts()
   {
     carts = new ArrayList<Cart>();
@@ -179,7 +207,12 @@ public class Shopper
     }
   }
   
-  // Writes cart file
+  /**
+  ---====================================================================---
+  NAME : WriteCarts
+  PURPOSE : Saves cart data to carts.txt
+  ---====================================================================---
+  */
   public void WriteCarts()
   {
 	  try
@@ -235,7 +268,12 @@ public class Shopper
 	  }
   }
   
-  // Writes customer files
+  /**
+  ---====================================================================---
+  NAME : WriteCustomers
+  PURPOSE : Saves customer data to customers.txt
+  ---====================================================================---
+  */
   public void WriteCustomers()
   {
 	  try
@@ -275,7 +313,12 @@ public class Shopper
 	  }
   }
   
-  // Displays searched products to user
+  /**
+  ---====================================================================---
+  NAME : Search
+  PURPOSE : Searches the product files, updates the gui.
+  ---====================================================================---
+  */
   public void Search()
   {
     String kwd = shoppergui.GetSearchTerm();
@@ -293,6 +336,12 @@ public class Shopper
     shoppergui.DisplaySearchResults(this, results);
   }
   
+  /**
+  ---====================================================================---
+  NAME : GetCart
+  PURPOSE : Gets cart associated with a specific customer
+  ---====================================================================---
+  */
   public Cart GetCart(Customer cust)
   {
 	  if (carts.contains(new Cart(cust.RewNumber())))
@@ -307,6 +356,12 @@ public class Shopper
 	  }
   }
 
+  /**
+  ---====================================================================---
+  NAME : GetProductOfId
+  PURPOSE : Gets product of input id
+  ---====================================================================---
+  */
   public Product GetProductOfId(int id)
   {
     for (Product p : products)
@@ -319,28 +374,43 @@ public class Shopper
     return null;
   }
   
+  /**
+  ---====================================================================---
+  NAME : GetUser
+  PURPOSE : Returns the customer held in the shopper
+  ---====================================================================---
+  */
   public Customer GetUser()
   {
 	  return customer;
   }
 
+  // Displays cart to user
   public void DisplayCart()
   {
-	incart = true;
+	  incart = true;
     shoppergui.DisplayCart();
   }
   
+  // Displays shop to user
   public void DisplayShop()
   {
-	incart = false;
-	shoppergui.DisplayShop();
+	  incart = false;
+	  shoppergui.DisplayShop();
   }
   
+  // Checks if item in cart
   public boolean InCart()
   {
-	return incart;
+	  return incart;
   }
   
+  /**
+  ---====================================================================---
+  NAME : AddToCart
+  PURPOSE : Adds specified product to cart amounttoadd amount of times
+  ---====================================================================---
+  */
   public void AddToCart(Product toadd, int amounttoadd)
   {
 	  for (int i = 0; i < amounttoadd; i++)
@@ -350,12 +420,24 @@ public class Shopper
 	  shoppergui.DisplayCartResults(this, cart, customer);
   }
   
+  /**
+  ---====================================================================---
+  NAME : RemoveCartItem
+  PURPOSE : Removes specified item from cart
+  ---====================================================================---
+  */
   public void RemoveCartItem(Product prod)
   {
 	  cart.RemoveItem(prod);
 	  shoppergui.DisplayCartResults(this, cart, customer);
   }
 
+  /**
+  ---====================================================================---
+  NAME : GetImage
+  PURPOSE : Gets image from path
+  ---====================================================================---
+  */
   public BufferedImage GetImage(String path)
   {
     try
@@ -369,11 +451,23 @@ public class Shopper
     }
   }
   
+  /**
+  ---====================================================================---
+  NAME : StartRegistration
+  PURPOSE : Displays the registration panel
+  ---====================================================================---
+  */
   public void StartRegistration()
   {
 	  logingui.DisplayRegistration();
   }
   
+  /**
+  ---====================================================================---
+  NAME : Register
+  PURPOSE : Grabs all items from registration panel, creates new customer
+  ---====================================================================---
+  */
   public void Register()
   {
 	  String fname = logingui.GetFirstName().trim();
@@ -413,6 +507,12 @@ public class Shopper
       shoppergui.DisplayCartResults(this, cart, customer);
   }
   
+  /**
+  ---====================================================================---
+  NAME : GetNewRewardsNumber
+  PURPOSE : Generates new rewards number
+  ---====================================================================---
+  */
   public int GetNewRewardsNumber()
   {
 	  int newnum = 1;
@@ -438,9 +538,15 @@ public class Shopper
 	  return newnum;
   }
   
+  /**
+  ---====================================================================---
+  NAME : LogOut
+  PURPOSE : Displays the registration panel
+  ---====================================================================---
+  */
   public void LogOut()
   {
-	  Collections.sort(customers);
+    Collections.sort(customers);
 	  Collections.sort(carts);
 	  WriteCarts();
 	  WriteCustomers();

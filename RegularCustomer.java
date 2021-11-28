@@ -1,3 +1,9 @@
+/**
+  ---====================================================================---
+  NAME : RegularCustomer
+  PURPOSE : Holds information for an elite customer, inherits customer
+  ---====================================================================---
+*/
 public class RegularCustomer extends Customer
 {
   private int stars;

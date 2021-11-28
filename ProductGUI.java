@@ -6,6 +6,12 @@ import javax.imageio.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 
+/**
+  ---====================================================================---
+  NAME : ProductGUI
+  PURPOSE : Holds information of one product read from a file
+  ---====================================================================---
+*/
 public class ProductGUI extends JPanel
 {
   public static int PRODUCT_PANEL_WIDTH = 780;
@@ -20,6 +26,12 @@ public class ProductGUI extends JPanel
   
   private JTextField addamount;
 
+  /**
+  ---====================================================================---
+  NAME : ProductGUI
+  PURPOSE : Constructor that builds the product GUI 
+  ---====================================================================---
+  */
   ProductGUI(Shopper shopper, Product _product)
   {
 	product = _product;
@@ -96,6 +108,12 @@ public class ProductGUI extends JPanel
     loginpanel.add(scroller);*/
   }
   
+  /**
+  ---====================================================================---
+  NAME : AddToCartListener
+  PURPOSE : Listener that listens for the add to cart butotn to be pressed.
+  ---====================================================================---
+  */
   public class AddToCartListener implements ActionListener
   {
     Shopper shopper;

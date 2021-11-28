@@ -1,5 +1,11 @@
 import java.util.ArrayList;
 
+/**
+  ---==================================================---
+  NAME : Cart
+  PURPOSE : Holds cart information read from carts.txt
+  ---==================================================---
+*/
 public class Cart implements Comparable
 {
   private int rewnumber;

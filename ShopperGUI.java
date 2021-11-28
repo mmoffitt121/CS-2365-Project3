@@ -8,7 +8,12 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-// ShopperGUI
+/**
+---====================================================================---
+NAME : ShopperGUI
+PURPOSE : GUI the user utilizes to interact with the shopping system.
+---====================================================================---
+*/
 public class ShopperGUI extends JFrame
 {
   public static final int START_WIDTH = 814;
@@ -36,9 +41,15 @@ public class ShopperGUI extends JFrame
   
   private JLabel total;
 
+  /**
+  ---====================================================================---
+  NAME : BuildShopGUI
+  PURPOSE : Builds the shop gui and the cart gui for display
+  ---====================================================================---
+  */
   private void BuildShopGUI(Shopper shopper)
   {
-	// Window initialization ---
+	  // Window initialization ---
 	
     setSize(START_WIDTH, START_HEIGHT);
     setResizable(false);
@@ -142,6 +153,13 @@ public class ShopperGUI extends JFrame
     cartholdingpanel.add(cscroller);
   }
 
+  /**
+  ---====================================================================---
+  NAME : DisplaySearchResults
+  PURPOSE : Displays search results for the user as scrollable list of
+  panels.
+  ---====================================================================---
+  */
   public void DisplaySearchResults(Shopper shopper, ArrayList<Product> results)
   {
     searchresults.setPreferredSize(new Dimension(780, results.size() * 240));
@@ -151,6 +169,13 @@ public class ShopperGUI extends JFrame
     }
   }
   
+  /**
+  ---====================================================================---
+  NAME : DisplayCartResults
+  PURPOSE : Displays cart results for the user as scrollable list of
+  panels.
+  ---====================================================================---
+  */
   public void DisplayCartResults(Shopper shopper, Cart results, Customer customer)
   {
 	  EmptyCartResults();
@@ -197,6 +222,12 @@ public class ShopperGUI extends JFrame
 	  total.setText(String.format("   Items in cart: %d    Discount: %%%.0f   Total: $%.2f    ", totalitems, discount * 100, totalcost));
   }
 
+  /**
+  ---====================================================================---
+  NAME : EmptySearch()
+  PURPOSE : Empties search panels
+  ---====================================================================---
+  */
   public void EmptySearch()
   {
     searchresults.removeAll();
@@ -204,6 +235,12 @@ public class ShopperGUI extends JFrame
     searchresults.repaint();
   }
   
+  /**
+  ---====================================================================---
+  NAME : EmptyCartResults()
+  PURPOSE : Empties cart panels
+  ---====================================================================---
+  */
   public void EmptyCartResults()
   {
 	 cartitems.removeAll();
@@ -211,6 +248,12 @@ public class ShopperGUI extends JFrame
 	 cartitems.repaint();
   }
   
+  /**
+  ---====================================================================---
+  NAME : EmptyScreen()
+  PURPOSE : Empties screen and re-initializes
+  ---====================================================================---
+  */
   public void EmptyScreen()
   {
 	outerframe.removeAll();
@@ -218,23 +261,47 @@ public class ShopperGUI extends JFrame
 	outerframe.repaint();
   }
 
+  /**
+  ---====================================================================---
+  NAME : GetSearchTerm()
+  PURPOSE : Search Term field accessor
+  ---====================================================================---
+  */
   public String GetSearchTerm()
   {
     return searchfield.getText();
   }
 
+  /**
+  ---====================================================================---
+  NAME : DisplayCart()
+  PURPOSE : Shows cart panel
+  ---====================================================================---
+  */
   public void DisplayCart()
   {
     EmptyScreen();
     outerframe.add(cartholdingpanel);
   }
   
+  /**
+  ---====================================================================---
+  NAME : DisplayShop()
+  PURPOSE : Shows shop panel
+  ---====================================================================---
+  */
   public void DisplayShop()
   {
 	EmptyScreen();
 	outerframe.add(shopholdingpanel);  
   }
 
+  /**
+  ---====================================================================---
+  NAME : ShopperGUI()
+  PURPOSE : Constructor
+  ---====================================================================---
+  */
   public ShopperGUI(Shopper shopper)
   {
     super();
@@ -246,6 +313,14 @@ public class ShopperGUI extends JFrame
     BuildShopGUI(shopper);
   }
 
+  /**
+  ---====================================================================---
+  ButtonListeners
+  PURPOSE : Listen and activate actions based on buttons pressed by user
+  ---====================================================================---
+  */
+
+  // Search Button Action
   public class SearchButtonListener implements ActionListener
   {
     Shopper shopper;
@@ -260,6 +335,7 @@ public class ShopperGUI extends JFrame
     }
   }
 
+  // Cart Button Action
   public class CartButtonListener implements ActionListener
   {
     Shopper shopper;
@@ -281,6 +357,7 @@ public class ShopperGUI extends JFrame
     }
   }
   
+  // Log Out Button Action
   public class LogOutListener implements ActionListener
   {
     Shopper shopper;

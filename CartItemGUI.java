@@ -6,6 +6,14 @@ import javax.imageio.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 
+
+/**
+  ---==================================================---
+  NAME : CartItemGUI
+  PURPOSE : Holds the GUI information for displaying each
+  item in cart.
+  ---==================================================---
+*/
 public class CartItemGUI extends JPanel
 {
   public static int PRODUCT_PANEL_WIDTH = 780;
@@ -18,9 +26,15 @@ public class CartItemGUI extends JPanel
   
   private Product product;
 
+  /**
+    ---==================================================---
+    NAME : CartItemGUI
+    PURPOSE : Constructs the CartItemGUI for display.
+    ---==================================================---
+  */
   CartItemGUI(Shopper shopper, Product _product, int amount)
   {
-	product = _product;  
+	  product = _product;  
 	 
     setPreferredSize(new Dimension(PRODUCT_PANEL_WIDTH, PRODUCT_PANEL_HEIGHT));
     
@@ -78,6 +92,13 @@ public class CartItemGUI extends JPanel
     namebox.add(addtocart);
   }
   
+  /**
+    ---==================================================---
+    NAME : DelButtonListener
+    PURPOSE : Action listener for the delete cart item
+    button.
+    ---==================================================---
+  */
   public class DelButtonListener implements ActionListener
   {
     Shopper shopper;
